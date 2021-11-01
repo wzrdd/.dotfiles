@@ -25,9 +25,9 @@
   :config (setq screenshot-upload-fn "xclip"))
 
 (map! (:leader
-        (:map global-map
-         :desc "Screenshot selected region"
-         :v "a" #'screenshot)))
+       (:map global-map
+        :desc "Screenshot selected region"
+        :v "a" #'screenshot)))
 
 ;; Evil-Mode
 ;; Focus new window after splitting
@@ -38,7 +38,7 @@
 
 ;; org
 (after! org
-  :custom
+  :config
   (setq org-directory "~/org/"
         org-startup-folded 'folded
         org-startup-with-inline-images t
@@ -54,10 +54,11 @@
   ;; automatically toggle latex preview on org files
   (add-hook! 'org-mode-hook 'org-fragtog-mode))
 
-;; like org-agenda but nicer
+;; replace org-agenda with org-super-agenda
 (use-package! org-super-agenda
-  :commands (org-super-agenda-mode))
-(setq org-super-agenda-header-map (make-sparse-keymap))
+  :commands (org-super-agenda-mode)
+  :config (setq org-super-agenda-header-map (make-sparse-keymap)))
+
 (after! org-agenda
   (add-to-list 'org-agenda-custom-commands
                '("p" "All TODOs groups by category"
