@@ -5,15 +5,17 @@
       indent-line-function      'insert-tab
       doom-theme                'doom-oceanic-next)
 
-(add-hook! 'prog-mode
-           (setq-default c-basic-offset 2)
-           (setq indent-tabs-mode  nil ;; use spaces instead of tabs for indentation
-                 tab-width         2))
+(use-package! prog-mode
+  :config
+  (setq indent-tabs-mode  nil ;; use spaces instead of tabs for indentation
+        tab-width         4))
 
 (whitespace-mode -1)
 
 ;; LSP
 (add-hook! 'lsp-mode
+  (setq company-minimum-prefix-length 1
+        company-idle-delay 0.0)
   (setq lsp-ui-sideline-code-actions nil
         lsp-ui-sideline-enable nil))
 
