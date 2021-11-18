@@ -8,14 +8,22 @@
 (use-package! prog-mode
   :config
   (setq indent-tabs-mode  nil ;; use spaces instead of tabs for indentation
-        tab-width         4))
+        tab-width 2))
+
+;; typescript
+(add-hook! 'typescript-mode-hook
+  (setq typescript-indent-level 2)
+  (lsp)
+  (magit-todos-mode))
+(setq-hook! 'typescript-mode-hook tab-width 2)
 
 (whitespace-mode -1)
 
 ;; LSP
 (add-hook! 'lsp-mode
   (setq company-minimum-prefix-length 1
-        company-idle-delay 0.0)
+        company-idle-delay 0.0
+        tab-width 2)
   (setq lsp-ui-sideline-code-actions nil
         lsp-ui-sideline-enable nil))
 
