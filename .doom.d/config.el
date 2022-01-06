@@ -11,6 +11,7 @@
         tab-width 2))
 
 ;; typescript
+(add-hook! 'typescript-mode-hook #'format-all-mode)
 (add-hook! 'typescript-mode-hook
   (setq typescript-indent-level 2)
   (lsp)
