@@ -1,0 +1,149 @@
+[barsettings]
+padding = 1.9
+
+[global/wm]
+margin-bottom = 50
+margin-top = 0
+
+[bar/main]
+tray-position = right
+; tray-padding = ${barsettings.padding}
+tray-background = ${color.bg}
+tray-margin = 8
+
+monitor =
+monitor-fallback =
+monitor-strict = false
+
+override-redirect = false
+
+bottom = false
+fixed-center = true
+
+width = 100%
+height = 32
+offset-x = 0
+offset-y = 0
+
+background = ${color.bg}
+foreground = ${color.fg}
+
+radius-top = 0.0
+radius-bottom = 0.0
+
+padding = 4
+
+module-margin-left = 2
+module-margin-right = 2
+
+font-0 = "Product Sans:pixelsize=11:weight=regular:size=0;2"
+font-1 = "Product Sans:pixelsize=11:weight=bold:size=0;2"
+font-2 = "Material Design Icons:size=12;2"
+
+modules-left = i3  
+modules-center = date time 
+modules-right = mic-volume alsa
+
+separator =
+
+spacing = 0
+
+dim-value = 1.0
+
+wm-restack = i3
+
+enable-ipc = true
+
+[settings]
+throttle-output = 5
+throttle-output-for = 10
+
+throttle-input-for = 30
+
+screenchange-reload = false
+
+compositing-background = source
+compositing-foreground = over
+compositing-overline = over
+compositing-underline = over
+compositing-border = over
+
+pseudo-transparency = true
+
+[color]
+
+bg = #121213
+fg = #fdf9f7
+fg-alt = #121213
+
+alpha = #00000000
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+format-margin = 4
+index-sort = true
+
+enable-click = true
+reverse-scroll = false
+
+label-focused = %index%
+label-focused-padding = 4
+label-focused-font = 2
+
+label-unfocused = %index%
+label-unfocused-padding = 4
+
+label-urgent = !
+label-urgent-padding = 5
+label-urgent-font = 2
+
+[module/mic-volume]
+type = custom/script
+interval = 1
+format = Mic: <label>
+exec = bash ~/.config/polybar/mic-volume.sh 
+
+[module/alsa]
+type = internal/alsa
+
+format-volume = Vol: <label-volume>
+format-volume-background = ${color.bg}
+format-volume-foreground = ${color.fg}
+format-volume-padding = ${barsettings.padding}
+
+label-volume = %percentage%%
+
+format-muted-background = ${color.fg}
+format-muted-foreground = ${color.bg}
+format-muted-padding = ${barsettings.padding}
+label-muted = "Muted"
+
+ramp-volume-0 = 󰕿
+ramp-volume-1 = 󰖀
+ramp-volume-2 = 󰕾
+
+ramp-headphones-0 = 󰋋
+ramp-headphones-1 = 󰟎
+
+[module/date]
+type = internal/date
+interval = 1.0
+time = 󰃭 %{T2}%A%{T-}, %B %d
+format = <label>
+format-background = ${color.bg}
+format-foreground = ${color.fg}
+format-padding = ${barsettings.padding}
+
+label = %time%
+
+[module/time]
+type = internal/date
+interval = 1.0
+time = 󰥔 %{T2}%H:%M%{T-}
+format = <label>
+format-background = ${color.bg}
+format-foreground = ${color.fg}
+format-padding = ${barsettings.padding}
+
+label = %time%
