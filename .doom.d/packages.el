@@ -6,7 +6,6 @@
 (package! org-cliplink)
 (package! org-fragtog)
 (package! org-super-agenda)
-(package! simple-httpd)
 (package! org-ol-tree
   :recipe (:host github :repo "Townk/org-ol-tree"))
 (package! emacs-sql-indent
