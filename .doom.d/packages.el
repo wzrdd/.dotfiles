@@ -12,3 +12,7 @@
   :recipe (:host github :repo "alex-hhh/emacs-sql-indent"))
 (package! screnshot
   :recipe (:host github :repo "tecosaur/screenshot" :build (:not compile)))
+
+;; unpin org-roam is neccesary for org-roam-ui
+(unpin! org-roam)
+(package! org-roam-ui)

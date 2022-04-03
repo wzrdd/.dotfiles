@@ -2,18 +2,21 @@
 
 ;;; General
 ;;;
+;; Custom Functions
+(load-file "~/.dotfiles/.doom.d/custom-functions.el")
+;; General variables
 (setq display-line-numbers-type 'relative
-      indent-line-function      'insert-tab
-      doom-theme                'doom-tokyo-night)
-;; Whitespace visualization that I prefer to run manually
-(whitespace-mode -1)
+      indent-line-function 'insert-tab
+      doom-theme 'doom-tokyo-night
+      indent-tabs-mode 'nil
+      whitespace-mode 'nil)
 
 ;; Evil-Mode
-;; Focus new window after splitting
-(setq evil-split-window-below t
-      evil-vsplit-window-right t)
-;; More granular insert mode undo.
-(setq evil-want-fine-undo t)
+(use-package! evil
+  :config
+  (setq evil-split-window-below t  ;; Focus new window after splitting.
+        evil-vsplit-window-right t ;; Same as above.
+        evil-want-fine-undo t))    ;; comentario de ejemplo
 
 ;; Tecosaur's screenshot
 (use-package! screenshot
@@ -28,25 +31,30 @@
 ;;;
 (use-package! prog-mode
   :config
-  (setq indent-tabs-mode nil ;; use spaces instead of tabs for indentation
+  (setq indent-tabs-mode 'nil ;; use spaces instead of tabs for indentation
+        tab-width 2))
+
+;; Company
+(use-package! company
+  :config
+  (setq company-minimum-prefix-length 1
+        company-idle-delay 0.0
         tab-width 2))
 
 ;; LSP
-(add-hook! 'lsp-mode
- (setq company-minimum-prefix-length 1
-       company-idle-delay 0.0
-       tab-width 2)
- (setq lsp-ui-sideline-code-actions nil
-       lsp-ui-sideline-enable nil))
+(use-package! lsp
+  :config
+  (setq lsp-ui-sideline-code-actions nil
+        lsp-ui-sideline-enable nil))
 
 ;; Typescript
 (after! typescript-mode
   (add-hook! 'typescript-mode-hook #'format-all-mode)
   (add-hook! 'typescript-mode-hook
     (setq typescript-indent-level 2
-     tab-width 2)
-   (lsp)
-   (magit-todos-mode)))
+          tab-width 2)
+    (lsp)
+    (magit-todos-mode)))
 
 ;;; org-mode
 ;;;
@@ -56,14 +64,18 @@
         org-startup-folded 'folded
         org-startup-with-inline-images t
         org-hide-emphasis-markers t
-        org-superstar-headline-bullets-list '("⁖" "◉" "○" "✸" "■"))
-  ;; org-capture
+        org-superstar-headline-bullets-list '("⁖" "◉" "○" "✸" "■")))
+
+(after! org-roam
+  :config
+  (setq org-roam-directory "~/org/roam/zettelkasten"
+        +org-roam-auto-backlinks-buffer t
+        org-roam-buffer-postrender-functions #'magit-section-show-level-2-all))
+
+(after! org-capture
   (add-to-list 'org-capture-templates
-               '("s" "Schedule" entry (file "~/org/schedule.org")
-                 "* TODO %?\n%i\n%a" :prepend t))
-  (add-to-list 'org-capture-templates
-               '("l" "Links" entry (file "~/org/links.org")
-                 "* Revisar %(org-cliplink-capture)" :prepend t)))
+               '("i" "Inbox" entry (file "~/org/inbox.org")
+                 "** Revisar %(org-cliplink-capture)" :append t)))
 
 ;; automatically toggle latex preview on org files
 (use-package! org-fragtog-mode
@@ -88,4 +100,17 @@
       :mode org-mode
       "m y" #'org-download-clipboard)
 
+;; org-present
 (setq +org-present-text-scale 3)
+
+;; org-roam-ui
+(use-package! websocket ;; needed by org-roam-ui
+  :after org-roam)
+
+(use-package! org-roam-ui
+  :after org-roam
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start t))
