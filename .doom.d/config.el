@@ -11,6 +11,15 @@
       indent-tabs-mode 'nil
       whitespace-mode 'nil)
 
+;; Emacs 29 🦍
+(when (version< "29.0" emacs-version)
+  ;; General Emacs29
+  (pixel-scroll-precision-mode)
+  ;; Emoji
+  (map! (:leader
+         (:prefix-map ("e" . "emojis")
+          :desc "Insert emoji" "i" #'emoji-insert))))
+
 ;; Evil-Mode
 (use-package! evil
   :config
@@ -58,7 +67,7 @@
 
 ;;; org-mode
 ;;;
-(after! org
+(use-package! org
   :config
   (setq org-directory "~/org/"
         org-startup-folded 'folded
@@ -66,13 +75,14 @@
         org-hide-emphasis-markers t
         org-superstar-headline-bullets-list '("⁖" "◉" "○" "✸" "■")))
 
-(after! org-roam
+(use-package! org-roam
   :config
   (setq org-roam-directory "~/org/roam/zettelkasten"
         +org-roam-auto-backlinks-buffer t
         org-roam-buffer-postrender-functions #'magit-section-show-level-2-all))
 
-(after! org-capture
+(use-package! org-capture
+  :config
   (add-to-list 'org-capture-templates
                '("i" "Inbox" entry (file "~/org/inbox.org")
                  "** Revisar %(org-cliplink-capture)" :append t)))
