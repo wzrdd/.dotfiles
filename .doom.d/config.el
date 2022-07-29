@@ -4,12 +4,15 @@
 ;;;
 ;; Custom Functions
 (load-file "~/.dotfiles/.doom.d/custom-functions.el")
+
 ;; General variables
 (setq display-line-numbers-type 'relative
       indent-line-function 'insert-tab
       doom-theme 'doom-tokyo-night
       indent-tabs-mode 'nil
       whitespace-mode 'nil)
+
+(setq ispell-dictionary "spanish")
 
 ;; Emacs 29 🦍
 (when (version< "29.0" emacs-version)
@@ -46,8 +49,8 @@
 ;; Company
 (use-package! company
   :config
-  (setq company-minimum-prefix-length 1
-        company-idle-delay 0.0
+  (setq company-minimum-prefix-length 3
+        company-idle-delay 0.1
         tab-width 2))
 
 ;; LSP
@@ -65,6 +68,9 @@
     (lsp)
     (magit-todos-mode)))
 
+;; deft
+(setq deft-directory "~/org/roam/zettelkasten")
+
 ;;; org-mode
 ;;;
 (use-package! org
@@ -73,13 +79,25 @@
         org-startup-folded 'folded
         org-startup-with-inline-images t
         org-hide-emphasis-markers t
-        org-superstar-headline-bullets-list '("⁖" "◉" "○" "✸" "■")))
+        org-superstar-headline-bullets-list '("⁖" "◉" "○" "✸" "■"))
+  (add-hook! 'org-mode-hook 'auto-fill-mode))
 
+;;; org-roam
+;;;
 (use-package! org-roam
   :config
-  (setq org-roam-directory "~/org/roam/zettelkasten"
+  (setq org-roam-directory "~/org/notes/zettelkasten"
         +org-roam-auto-backlinks-buffer t
         org-roam-buffer-postrender-functions #'magit-section-show-level-2-all))
+
+(use-package! org-transclusion
+  :after org
+  :init
+  (map!
+   :map global-map "<f12>" #'org-transclusion-add
+   :leader
+   :prefix "n"
+   :desc "Org Transclusion Mode" "t" #'org-transclusion-mode))
 
 (use-package! org-capture
   :config
@@ -98,14 +116,15 @@
 
 ;; Paste images capability in org-mode
 (use-package! org-download
-  :after org
+  :after org-roam
   :defer nil
   :config
   (setq org-download-image-dir "images"
         org-download-heading-lvl nil
         org-download-timestamp "%Y%m%d-%H%M%S_"
         org-image-actual-width 300
-        org-download-screenshot-method "/usr/bin/xclip %s"))
+        org-download-screenshot-method "/usr/bin/xclip %s")
+  (org-download-enable))
 (map! :leader
       :mode org-mode
       "m y" #'org-download-clipboard)
@@ -124,3 +143,20 @@
         org-roam-ui-follow t
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
+
+;; Delve
+;;
+(use-package! delve
+  :after org-roam
+  :config (setq delve-storage-paths "~/org/delve/"))
+
+;; Citar
+;;
+(use-package! citar
+  :config
+  ;;(setq citar-library-paths "~/Documents/Bibliography/"
+  (setq citar-bibliography '("~/org/notes/references/master.bib")
+        org-cite-global-bibliography citar-bibliography
+        citar-library-paths '("~/Documents/Bibliography/")
+        citar-notes-paths '("~/org/notes/zettelkasten/notes/")
+        citar-open-note-function 'orb-citar-edit-note))
