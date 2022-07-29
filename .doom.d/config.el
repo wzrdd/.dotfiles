@@ -160,3 +160,13 @@
         citar-library-paths '("~/Documents/Bibliography/")
         citar-notes-paths '("~/org/notes/zettelkasten/notes/")
         citar-open-note-function 'orb-citar-edit-note))
+
+;; org-roam-search
+;;
+(use-package org-roam-search
+    :after (org-roam)
+    :bind
+    (:map global-map
+     (("C-c n f" . org-roam-search-node-find))
+     :map org-mode-map
+     (("C-c n i" . org-roam-search-node-insert))))
