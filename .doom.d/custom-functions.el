@@ -17,3 +17,17 @@
 (map! (:leader
        (:desc "Search text en-wikipedia"
         :v "ow" #'me/lookup-wikipedia)))
+
+(defun me/org-link-copy (&optional arg)
+  "Extract URL from org-mode link and add it to kill ring."
+  (interactive "P")
+  (let* ((link (org-element-lineage (org-element-context) '(link) t))
+         (type (org-element-property :type link))
+         (url (org-element-property :path link))
+         (url (concat type ":" url)))
+    (kill-new url)
+    (message (concat "Copied URL: " url))))
+
+(map! :leader
+      :mode org-mode
+      "m l y" #'me/org-link-copy)
