@@ -8,7 +8,7 @@
 ;; General variables
 (setq display-line-numbers-type 'relative
       indent-line-function 'insert-tab
-      doom-theme 'doom-tokyo-night
+      doom-theme 'doom-old-hope
       indent-tabs-mode 'nil
       whitespace-mode 'nil)
 
@@ -82,6 +82,12 @@
         org-superstar-headline-bullets-list '("⁖" "◉" "○" "✸" "■"))
   (add-hook! 'org-mode-hook 'auto-fill-mode))
 
+;; org-babel
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (mermaid . t)))
+
 ;;; org-roam
 ;;;
 (use-package! org-roam
@@ -129,6 +135,10 @@
       :mode org-mode
       "m y" #'org-download-clipboard)
 
+(use-package! org-krita
+  :config
+  (add-hook 'org-mode-hook 'org-krita-mode))
+
 ;; org-present
 (setq +org-present-text-scale 3)
 
@@ -164,9 +174,6 @@
 ;; org-roam-search
 ;;
 (use-package org-roam-search
-    :after (org-roam)
-    :bind
-    (:map global-map
-     (("C-c n f" . org-roam-search-node-find))
-     :map org-mode-map
-     (("C-c n i" . org-roam-search-node-insert))))
+    :after (org-roam))
+(map! :leader
+        "n r /" #'org-roam-search-node-find)

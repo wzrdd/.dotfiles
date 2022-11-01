@@ -144,15 +144,19 @@
        (javascript +lsp)   ; all(hope(abandon(ye(who(enter(here))))))
        (julia +lsp)        ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
-       ;;(latex +lsp)      ; writing papers in Emacs has never been so fun
+       (latex +lsp)        ; writing papers in Emacs has never been so fun
        ;;lean              ; for folks with too much to prove
        ;;ledger            ; an accounting system in Emacs
        ;;lua               ; one-based indices? one-based indices
-       markdown          ; writing docs for people to ignore
+       markdown            ; writing docs for people to ignore
        ;;nim               ; python + lisp at the speed of c
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
-       (org +pretty +roam2 +hugo); organize your plain life in plain text
+       (org                ; organize your plain life in plain text
+        +pretty
+        +roam2
+        +hugo
+        +noter)
        ;;(php +lsp)        ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional

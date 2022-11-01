@@ -28,16 +28,18 @@
 (package! sexp-string
   ;; needed by org-roam-search
   :recipe (:host github :repo "natask/sexp-string"))
-(package! org-roam-bibtex
-  :recipe (:host github :repo "org-roam/org-roam-bibtex"))
-;; recommended for org-roam-ui and needed by org-roam-bibtex
+;; recommended for org-roam-ui
 (unpin! org-roam)
-(when (featurep! :tools biblio)
-  (unpin! bibtex-completion helm-bibtex ivy-bibtex))
 
 ;; org-mode related
 (package! org-ol-tree
   :recipe (:host github :repo "Townk/org-ol-tree"))
+(package! org-krita
+  :recipe (:host github
+           :repo "lepisma/org-krita"
+           :files ("resources" "resources" "*.el" "*.el")))
+(package! mermaid
+  :recipe (:host github :repo "arnm/ob-mermaid"))
 
 ;; general quality of life
 (package! emacs-sql-indent
