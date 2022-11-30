@@ -17,11 +17,9 @@
 ;; Emacs 29 🦍
 (when (version< "29.0" emacs-version)
   ;; General Emacs29
-  (pixel-scroll-precision-mode)
-  ;; Emoji
-  (map! (:leader
-         (:prefix-map ("e" . "emojis")
-          :desc "Insert emoji" "i" #'emoji-insert))))
+  (pixel-scroll-precision-mode))
+
+
 
 ;; Evil-Mode
 (use-package! evil
@@ -34,10 +32,10 @@
 (use-package! screenshot
   :defer t
   :config (setq screenshot-upload-fn "xclip"))
-(map! (:leader
-       (:map global-map
-        :desc "Screenshot selected region"
-        :v "a" #'screenshot)))
+(map! :leader
+      :map global-map
+      :desc "Screenshot selected region"
+      :v "a" #'screenshot)
 
 ;;; Programming
 ;;;
@@ -176,4 +174,4 @@
 (use-package org-roam-search
     :after (org-roam))
 (map! :leader
-        "n r /" #'org-roam-search-node-find)
+      "n r /" #'org-roam-search-node-find)
