@@ -1,4 +1,4 @@
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+;;; -*- lexical-binding: t; -*-
 
 ;;; General
 ;;;
@@ -18,8 +18,6 @@
 (when (version< "29.0" emacs-version)
   ;; General Emacs29
   (pixel-scroll-precision-mode))
-
-
 
 ;; Evil-Mode
 (use-package! evil
@@ -66,8 +64,9 @@
     (lsp)
     (magit-todos-mode)))
 
-;; deft
-(setq deft-directory "~/org/roam/zettelkasten")
+;; Ledger
+(use-package! ledger-mode
+  :mode "\\.dat\\'")
 
 ;;; org-mode
 ;;;
@@ -151,27 +150,3 @@
         org-roam-ui-follow t
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
-
-;; Delve
-;;
-(use-package! delve
-  :after org-roam
-  :config (setq delve-storage-paths "~/org/delve/"))
-
-;; Citar
-;;
-(use-package! citar
-  :config
-  ;;(setq citar-library-paths "~/Documents/Bibliography/"
-  (setq citar-bibliography '("~/org/notes/references/master.bib")
-        org-cite-global-bibliography citar-bibliography
-        citar-library-paths '("~/Documents/Bibliography/")
-        citar-notes-paths '("~/org/notes/zettelkasten/notes/")
-        citar-open-note-function 'orb-citar-edit-note))
-
-;; org-roam-search
-;;
-(use-package org-roam-search
-    :after (org-roam))
-(map! :leader
-      "n r /" #'org-roam-search-node-find)

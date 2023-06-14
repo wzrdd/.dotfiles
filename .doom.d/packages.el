@@ -19,12 +19,6 @@
 ;; Github
 ;;
 ;; org-roam related
-(package! delve
-  :recipe (:host github :repo "publicimageltd/delve"))
-(package!  delve-show
-  :recipe (:host github :repo "natask/delve-show"))
-(package! org-roam-search
-  :recipe (:host github :repo "natask/org-roam-search"))
 (package! sexp-string
   ;; needed by org-roam-search
   :recipe (:host github :repo "natask/sexp-string"))
