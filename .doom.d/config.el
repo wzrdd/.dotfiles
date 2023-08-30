@@ -79,6 +79,7 @@
         org-superstar-headline-bullets-list '("⁖" "◉" "○" "✸" "■"))
   (add-hook! 'org-mode-hook 'auto-fill-mode))
 
+
 ;; org-babel
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -89,7 +90,7 @@
 ;;;
 (use-package! org-roam
   :config
-  (setq org-roam-directory "~/org/notes/zettelkasten"
+  (setq org-roam-directory "~/org/roam"
         +org-roam-auto-backlinks-buffer t
         org-roam-buffer-postrender-functions #'magit-section-show-level-2-all))
 
